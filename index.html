@@ -12,6 +12,7 @@
             --gold: #c5a059;
             --champagne: #fdfbf4;
             --soft-text: #4a4a4a;
+            --lantern-glow: rgba(197, 160, 89, 0.8);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -23,29 +24,21 @@
             background: radial-gradient(circle at center, #023d2f, #012e23);
         }
 
-        /* Fixed Lantern Styling */
+        /* BRIGHTER LANTERNS */
         #lantern-field { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            z-index: 1; 
-            pointer-events: none; 
-            overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: 1; pointer-events: none; overflow: hidden;
         }
         .lantern {
-            position: absolute; 
-            background: rgba(197, 160, 89, 0.4);
+            position: absolute; background: var(--lantern-glow);
             border-radius: 50%; 
-            box-shadow: 0 0 10px 2px rgba(197, 160, 89, 0.3);
-            animation: floatUp linear infinite;
-            bottom: -20px;
+            box-shadow: 0 0 15px 5px rgba(197, 160, 89, 0.6);
+            animation: floatUp linear infinite; bottom: -20px;
         }
         @keyframes floatUp {
             0% { transform: translateY(0) translateX(0); opacity: 0; }
-            20% { opacity: 0.6; }
-            100% { transform: translateY(-110vh) translateX(20px); opacity: 0; }
+            20% { opacity: 0.9; }
+            100% { transform: translateY(-110vh) translateX(30px); opacity: 0; }
         }
 
         .wrapper { 
@@ -53,35 +46,38 @@
             display: flex; justify-content: center; align-items: center; z-index: 10;
         }
 
-        /* --- ENVELOPE (BACKLIT) --- */
+        /* ENVELOPE ALWAYS LIT */
         .envelope {
             position: relative; width: 95%; max-width: 500px; height: 340px; 
-            background: #01362a;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4); cursor: pointer;
-            transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(197, 160, 89, 0.1);
-            z-index: 15;
+            background: #01362a; 
+            box-shadow: 0 0 50px rgba(197, 160, 89, 0.4), 0 30px 60px rgba(0,0,0,0.5); 
+            cursor: pointer; transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(197, 160, 89, 0.2); z-index: 15;
         }
-        .envelope:hover { box-shadow: 0 0 45px rgba(197, 160, 89, 0.6), 0 30px 60px rgba(0,0,0,0.4); }
         .envelope.open { transform: translateY(120vh) scale(0.8); opacity: 0; pointer-events: none; }
         
         .envelope-flap {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #012e23; clip-path: polygon(0 0, 50% 55%, 100% 0); z-index: 3;
-            transition: background 0.5s ease;
+            background: radial-gradient(circle at 50% 0%, #024a3a 0%, #012e23 70%);
+            clip-path: polygon(0 0, 50% 55%, 100% 0); z-index: 3;
         }
-        .envelope:hover .envelope-flap { background: radial-gradient(circle at 50% 0%, #024a3a 0%, #012e23 70%); }
 
+        /* SEAL LIT ON HOVER */
         .seal {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 100px; height: 100px; background: var(--gold);
             border-radius: 50%; z-index: 4; display: flex; align-items: center;
             justify-content: center; overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3); border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3); 
+            border: 3px solid rgba(255,255,255,0.3);
+            transition: 0.3s ease;
+        }
+        .envelope:hover .seal {
+            box-shadow: 0 0 30px 10px rgba(197, 160, 89, 0.8);
+            transform: translate(-50%, -50%) scale(1.05);
         }
         .seal img { width: 85%; height: 85%; object-fit: contain; }
 
-        /* --- CARD (NO TILT) --- */
         .card {
             position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%) scale(0.95);
@@ -97,29 +93,20 @@
         .card::-webkit-scrollbar { display: none; }
 
         .guest-welcome { font-size: 0.8rem; letter-spacing: 2px; color: var(--gold); font-weight: 600; margin-bottom: 5px; }
-
         .card-header-logo { width: 140px; height: 140px; margin: 0 auto 10px; }
         .card-header-logo img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* SPECULAR HIGHLIGHT TEXT */
         .main-names { 
             font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 12vw, 5rem); 
             margin: 20px 0 0px; font-weight: 300;
             background: linear-gradient(135deg, var(--emerald) 40%, #fff 50%, var(--emerald) 60%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: foilShine 6s infinite linear;
+            background-size: 200% 100%; -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; animation: foilShine 6s infinite linear;
         }
         @keyframes foilShine { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
 
         .weds-text { font-size: 1.8rem; color: var(--gold); display: block; margin: -10px 0; font-weight: 300; -webkit-text-fill-color: var(--gold); }
-        
-        .couple-illustration { 
-            width: 100%; max-width: 500px; 
-            margin: -10px auto 10px; 
-            position: relative; top: -15px; 
-        }
+        .couple-illustration { width: 100%; max-width: 500px; margin: -10px auto 10px; position: relative; top: -15px; }
         .couple-illustration img { width: 100%; height: auto; }
 
         .scratch-box {
@@ -141,8 +128,7 @@
             display: inline-block; margin: 10px 0; padding: 18px 45px; 
             background: var(--emerald); color: var(--champagne); text-decoration: none; 
             font-size: 0.8rem; letter-spacing: 2px; font-weight: 600;
-            transition: 0.4s; border: none; border-radius: 60px;
-            width: 100%; max-width: 320px;
+            transition: 0.4s; border: none; border-radius: 60px; width: 100%; max-width: 320px;
         }
         .btn:hover { background: var(--gold); transform: translateY(-2px); }
 
@@ -152,7 +138,9 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop preload="auto"><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
+    <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
+        <source src="https://docs.google.com/uc?export=download&id=16eSRnEl007ksinyxcJ18malywR4ZD7L7" type="audio/mpeg">
+    </audio>
 
     <div id="lantern-field"></div>
 
@@ -162,23 +150,19 @@
             <div class="seal">
                 <img src="https://drive.google.com/thumbnail?id=1beQfliXqIi0uLmmmbHoGIh6n1jwslWDW&sz=s1000" alt="Seal Logo">
             </div>
-            <p style="position: absolute; bottom: 35px; width: 100%; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; letter-spacing: 5px;">OPEN INVITATION</p>
+            <p style="position: absolute; bottom: 35px; width: 100%; text-align: center; color: rgba(255,255,255,0.7); font-size: 0.75rem; letter-spacing: 5px; font-weight: 600;">TAP TO OPEN</p>
         </div>
 
         <div class="card" id="card">
             <p class="guest-welcome" id="guestNameDisplay"></p>
-
             <div class="card-header-logo">
-                <img src="https://drive.google.com/thumbnail?id=1beQfliXqIi0uLmmmbHoGIh6n1jwslWDW&sz=s1000" alt="Couple Logo">
+                <img src="https://drive.google.com/thumbnail?id=1beQfliXqIi0uLmmmbHoGIh6n1jwslWDW&sz=s1000" alt="Logo">
             </div>
-
             <p style="font-size: 0.7rem; letter-spacing: 5px; color: var(--gold);">A CELEBRATION OF NEW BEGINNINGS</p>
             <h1 class="main-names">Vara Kumar<span class="weds-text">weds</span>Sushma</h1>
-            
             <div class="couple-illustration">
-                <img src="https://drive.google.com/thumbnail?id=1KDBHXqWuMNwxyMCfeEOarIyCsQM9cu2J&sz=s1000" alt="Watercolor Illustration">
+                <img src="https://drive.google.com/thumbnail?id=1KDBHXqWuMNwxyMCfeEOarIyCsQM9cu2J&sz=s1000" alt="Illustration">
             </div>
-
             <div class="scratch-box">
                 <canvas id="scratch-canvas" width="340" height="180"></canvas>
                 <div class="revealed-content">
@@ -192,7 +176,7 @@
                 </div>
             </div>
             <p style="font-size: 0.75rem; color: var(--gold); font-style: italic; margin-bottom: 30px;">Scratch to reveal the surprise</p>
-
+            
             <div class="details-text">
                 <strong style="color: var(--emerald); letter-spacing: 3px; font-size: 1.1rem;">DINNER RECEPTION</strong><br>
                 Sunday, May 3 • 7:00 PM Onwards<br><br>
@@ -201,8 +185,12 @@
             </div>
 
             <div style="margin-top: 40px;">
-                <a href="#" class="btn">VIEW LOCATION</a><br>
+                <a href="https://maps.app.goo.gl/3Uv3T7G9Z9GzR9mR7" target="_blank" class="btn">VIEW LOCATION</a><br>
                 <a href="#" class="btn" style="background:transparent; border:1px solid var(--gold); color:var(--gold);">SAVE TO CALENDAR</a>
+            </div>
+
+            <div style="margin-top: 60px; font-style: italic; color: var(--soft-text); font-size: 1rem;">
+                We can't wait to celebrate our new beginning with you.
             </div>
 
             <div class="thank-you">With Love</div>
@@ -211,38 +199,39 @@
     </div>
 
     <script>
-        // 1. GUEST PERSONALIZATION
         const urlParams = new URLSearchParams(window.location.search);
         const guest = urlParams.get('guest');
         if (guest) document.getElementById('guestNameDisplay').innerText = `Hi ${guest}, join us for...`;
 
-        // 2. FIXED LANTERNS LOGIC
         function createLanterns() {
             const field = document.getElementById('lantern-field');
-            for(let i=0; i<15; i++) {
+            for(let i=0; i<18; i++) {
                 const l = document.createElement('div');
                 l.className = 'lantern';
-                const size = Math.random() * 8 + 4;
-                l.style.width = size + 'px'; 
-                l.style.height = size + 'px';
+                const size = Math.random() * 10 + 5;
+                l.style.width = size + 'px'; l.style.height = size + 'px';
                 l.style.left = Math.random() * 100 + 'vw';
-                l.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                l.style.animationDelay = (Math.random() * 15) + 's';
+                l.style.animationDuration = (Math.random() * 8 + 12) + 's';
+                l.style.animationDelay = (Math.random() * 10) + 's';
                 field.appendChild(l);
             }
         }
         createLanterns();
 
-        // 3. MUSIC FADE-IN & OPENING
         function openInv() {
             const music = document.getElementById('bgMusic');
             music.volume = 0;
-            music.play().catch(()=>{});
-            let vol = 0;
-            const fadeIn = setInterval(() => {
-                if (vol < 0.2) { vol += 0.01; music.volume = vol; }
-                else clearInterval(fadeIn);
-            }, 100);
+            const playPromise = music.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    let vol = 0;
+                    const fadeIn = setInterval(() => {
+                        if (vol < 0.3) { vol += 0.02; music.volume = vol; }
+                        else clearInterval(fadeIn);
+                    }, 100);
+                }).catch(e => console.log("Audio play blocked by browser"));
+            }
 
             document.getElementById('envelope').classList.add('open');
             setTimeout(() => {
@@ -256,7 +245,6 @@
             const ctx = canvas.getContext('2d');
             let isDrawing = false;
             let feedbackTriggered = false;
-            
             ctx.fillStyle = '#c5a059';
             ctx.fillRect(0, 0, 340, 180);
 
@@ -265,14 +253,13 @@
                 const rect = canvas.getBoundingClientRect();
                 const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
                 const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-                
                 ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath();
-                ctx.arc(x, y, 25, 0, Math.PI*2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(x, y, 25, 0, Math.PI*2); ctx.fill();
 
-                // 4. HAPTIC FEEDBACK
-                if (window.navigator.vibrate) window.navigator.vibrate(15);
+                // HAPTICS
+                if ("vibrate" in navigator) {
+                    navigator.vibrate(20);
+                }
 
                 const data = ctx.getImageData(0, 0, 340, 180).data;
                 let clear = 0;
@@ -286,9 +273,12 @@
                     startTimer();
                 }
             }
-
             canvas.addEventListener('mousedown', () => isDrawing = true);
-            canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); }, {passive: false});
+            canvas.addEventListener('touchstart', (e) => { 
+                isDrawing = true; 
+                if ("vibrate" in navigator) navigator.vibrate(10); 
+                scratch(e); 
+            }, {passive: false});
             window.addEventListener('mouseup', () => isDrawing = false);
             window.addEventListener('touchend', () => isDrawing = false);
             canvas.addEventListener('mousemove', scratch);
@@ -299,6 +289,7 @@
             const target = new Date("May 3, 2026 19:00:00").getTime();
             setInterval(() => {
                 const d = target - new Date().getTime();
+                if (d < 0) return;
                 document.getElementById('days').innerText = Math.floor(d / 86400000);
                 document.getElementById('hours').innerText = Math.floor((d % 86400000) / 3600000);
                 document.getElementById('mins').innerText = Math.floor((d % 3600000) / 60000);

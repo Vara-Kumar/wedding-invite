@@ -24,8 +24,8 @@
             background: radial-gradient(circle at center, #023d2f, #012e23);
         }
 
-        /* GLOWING LANTERNS */
-        #lantern-field { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: hidden; }
+        /* --- GLOWING LANTERNS --- */
+        #lantern-field { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
         .lantern {
             position: absolute; background: var(--lantern-glow);
             border-radius: 50%; box-shadow: 0 0 15px 5px rgba(197, 160, 89, 0.6);
@@ -39,14 +39,15 @@
 
         .wrapper { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 10; }
 
-        /* ENVELOPE BACKLIT */
+        /* --- ENVELOPE (SLIDE DOWN) --- */
         .envelope {
             position: relative; width: 95%; max-width: 500px; height: 340px; 
             background: #01362a; box-shadow: 0 0 50px rgba(197, 160, 89, 0.4), 0 30px 60px rgba(0,0,0,0.5); 
-            cursor: pointer; transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer; transition: 1.2s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(197, 160, 89, 0.2); z-index: 15;
         }
-        .envelope.open { transform: translateY(120vh) scale(0.8); opacity: 0; pointer-events: none; }
+        .envelope.open { transform: translateY(120vh); opacity: 0; pointer-events: none; }
+        
         .envelope-flap {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 50% 0%, #024a3a 0%, #012e23 70%);
@@ -63,14 +64,24 @@
         .envelope:hover .seal { box-shadow: 0 0 30px 10px rgba(197, 160, 89, 0.8); transform: translate(-50%, -50%) scale(1.05); }
         .seal img { width: 85%; height: 85%; object-fit: contain; }
 
+        /* --- CARD (SLIDE UP) --- */
         .card {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95);
-            width: 96vw; max-width: 650px; height: 94vh; opacity: 0; visibility: hidden;
-            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.2s;
+            position: fixed; 
+            top: 100%; 
+            left: 50%; 
+            transform: translate(-50%, 0);
+            width: 96vw; max-width: 650px; height: 94vh; 
+            opacity: 0; visibility: hidden;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
             z-index: 20; background-color: var(--champagne); box-shadow: 0 20px 70px rgba(0,0,0,0.2);
             overflow-y: auto; scrollbar-width: none; padding: 40px 40px 100px; text-align: center;
         }
-        .card.reveal { opacity: 1; visibility: visible; }
+        .card.reveal { 
+            opacity: 1; 
+            visibility: visible; 
+            top: 50%; 
+            transform: translate(-50%, -50%); 
+        }
 
         .card-header-logo { width: 140px; height: 140px; margin: 0 auto 10px; }
         .card-header-logo img { width: 100%; height: 100%; object-fit: contain; }
@@ -118,8 +129,8 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
-        <source src="https://docs.google.com/uc?export=open&id=16eSRnEl007ksinyxcJ18malywR4ZD7L7" type="audio/mpeg">
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://raw.githubusercontent.com/Vara-Kumar/wedding-invite/refs/heads/main/ar-rahman-instrumental-music-collection-night-shift-melody_jE1o0y7c.mp3" type="audio/mpeg">
     </audio>
 
     <div id="lantern-field"></div>
@@ -166,7 +177,7 @@
             </div>
 
             <div style="margin-top: 40px;">
-                <a href="https://maps.app.goo.gl/YourActualLinkHere" target="_blank" class="btn">VIEW LOCATION</a><br>
+                <a href="https://www.google.com/maps" target="_blank" class="btn">VIEW LOCATION</a><br>
                 <a href="#" class="btn" style="background:transparent; border:1px solid var(--gold); color:var(--gold);">SAVE TO CALENDAR</a>
             </div>
 
@@ -200,6 +211,11 @@
         createLanterns();
 
         function openInv() {
+            // HAPTIC FIX: Unlock haptics on the very first user gesture (the click)
+            if ("vibrate" in navigator) {
+                navigator.vibrate(10); 
+            }
+
             const music = document.getElementById('bgMusic');
             music.volume = 0;
             music.play().then(() => {
@@ -208,15 +224,13 @@
                     if (vol < 0.3) { vol += 0.02; music.volume = vol; }
                     else clearInterval(fadeIn);
                 }, 100);
-            }).catch(() => {
-                console.log("Autoplay blocked. Browser requires user interaction.");
-            });
+            }).catch(e => console.warn("Audio blocked."));
 
             document.getElementById('envelope').classList.add('open');
             setTimeout(() => {
                 document.getElementById('card').classList.add('reveal');
                 initScratch();
-            }, 800);
+            }, 300); 
         }
 
         function initScratch() {
@@ -237,9 +251,8 @@
                 ctx.globalCompositeOperation = 'destination-out';
                 ctx.beginPath(); ctx.arc(x, y, 25, 0, Math.PI*2); ctx.fill();
 
-                // Haptic Tick while scratching
-                if (navigator.vibrate) navigator.vibrate(10);
-                
+                // Scratching haptic "ticks"
+                if (navigator.vibrate) navigator.vibrate(15);
                 checkScratch();
             }
 
@@ -248,12 +261,11 @@
                 let count = 0;
                 for (let i = 3; i < data.length; i += 4) if (data[i] === 0) count++;
                 
-                // AUTO-CLEAR AT 70% + FINAL VIBRATION
                 if (count > (340 * 180 * 0.70) && !revealed) {
                     revealed = true;
                     
-                    // Strong Final Vibration for 100% Reveal
-                    if (navigator.vibrate) navigator.vibrate(200);
+                    // Final Big Vibration (Success feel)
+                    if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
 
                     ctx.globalCompositeOperation = 'destination-out';
                     ctx.fillRect(0, 0, 340, 180);
@@ -270,7 +282,6 @@
             canvas.addEventListener('mousedown', () => isDrawing = true);
             canvas.addEventListener('touchstart', (e) => { 
                 isDrawing = true; 
-                if (navigator.vibrate) navigator.vibrate(15); 
                 scratch(e); 
             }, {passive: false});
             window.addEventListener('mouseup', () => isDrawing = false);

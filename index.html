@@ -27,7 +27,7 @@
             background: radial-gradient(circle at center, var(--emerald-light), var(--emerald));
         }
 
-        /* --- CLASSY CUSTOM SCROLLER --- */
+        /* --- SCROLLER --- */
         .card::-webkit-scrollbar { width: 5px; }
         .card::-webkit-scrollbar-track { background: rgba(197, 160, 89, 0.05); margin: 20px 0; }
         .card::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
@@ -54,7 +54,7 @@
             box-shadow: inset 2px -2px 5px rgba(0,0,0,0.3); opacity: 0;
         }
 
-        .wrapper { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 10; }
+        .wrapper { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 10; padding: 20px; }
 
         /* --- ENVELOPE --- */
         .envelope {
@@ -97,16 +97,22 @@
         }
         .card.reveal { opacity: 1; visibility: visible; top: 50%; transform: translate(-50%, -50%); }
 
+        /* Names Header - FIXED THE CUT OFF V */
         .main-names { 
-            font-family: 'Great Vibes', cursive; font-size: clamp(2.8rem, 10vw, 4.5rem); 
-            margin: 15px 0 0px; font-weight: 300; line-height: 1.1;
+            font-family: 'Great Vibes', cursive; 
+            font-size: clamp(3rem, 11vw, 4.5rem); 
+            margin: 35px 0 0px; 
+            padding-top: 10px; 
+            font-weight: 300; 
+            line-height: 1.4;
             background: linear-gradient(135deg, var(--emerald) 40%, #fff 50%, var(--emerald) 60%);
             background-size: 200% 100%; -webkit-background-clip: text;
             -webkit-text-fill-color: transparent; animation: foilShine 6s infinite linear;
         }
         @keyframes foilShine { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
-        .weds-text { font-size: 1.6rem; color: var(--gold); display: block; margin: -10px 0; font-weight: 300; }
-        .couple-illustration { width: 100%; max-width: 400px; margin: 0 auto 10px; }
+        .weds-text { font-size: 1.6rem; color: var(--gold); display: block; margin: -15px 0; font-weight: 300; }
+        
+        .couple-illustration { width: 100%; max-width: 400px; margin: -15px auto 10px; }
         .couple-illustration img { width: 100%; height: auto; }
 
         .scratch-box {
@@ -117,30 +123,18 @@
         .revealed-content { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; background-color: #fff;}
 
         #marriage-text { font-family: 'Great Vibes', cursive; font-size: 1.8rem; color: var(--emerald); margin-bottom: 5px; font-weight: 300; opacity:0; transition: 1s;}
-        #wedding-date-revealed { font-size: 1rem; letter-spacing: 3px; color: var(--gold); font-weight: 600; opacity:0; transition: 1s;}
+        #wedding-date-revealed { font-family: 'Montserrat', sans-serif; font-size: 1.1rem; letter-spacing: 3px; color: var(--gold); font-weight: 600; opacity:0; transition: 1s;}
         .timer { display: flex; justify-content: center; gap: 15px; margin-top: 10px; opacity:0; transition: 1s;}
         .timer-unit span { display: block; font-size: 1.3rem; font-weight: 300; color: var(--emerald); }
         .timer-unit label { font-size: 0.55rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
         .big-day-text { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; font-weight: 600; margin-top: 10px; opacity: 0; transition: 1s; }
 
-        /* --- CREEPER & EVENTS SECTION --- */
-        .timeline-container {
-            position: relative; max-width: 500px; margin: 40px auto; padding: 20px 0;
-            opacity: 0; transition: opacity 1.5s ease; display: none;
-        }
-        .creeper-svg {
-            position: absolute; left: 50%; top: 0; bottom: 0; width: 80px;
-            transform: translateX(-50%); z-index: 1;
-        }
-        .event-row {
-            display: flex; justify-content: space-between; align-items: center;
-            width: 100%; margin-bottom: 50px; position: relative; z-index: 2;
-        }
-        .event-card {
-            width: 44%; padding: 12px; background: white; border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--gold-light);
-            opacity: 0; transition: all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1);
-        }
+        #post-scratch-content { opacity: 0; display: none; transition: opacity 1.5s ease; }
+
+        .timeline-container { position: relative; max-width: 500px; margin: 40px auto; padding: 20px 0; }
+        .creeper-svg { position: absolute; left: 50%; top: 0; bottom: 0; width: 80px; transform: translateX(-50%); z-index: 1; }
+        .event-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 50px; position: relative; z-index: 2; }
+        .event-card { width: 44%; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--gold-light); opacity: 0; transition: 0.9s cubic-bezier(0.17, 0.55, 0.55, 1); }
         .left-event { transform: translateX(-30px); text-align: right; }
         .right-event { transform: translateX(30px); text-align: left; }
         .event-row.is-visible .event-card { opacity: 1; transform: translateX(0); }
@@ -148,7 +142,6 @@
         .event-time { color: var(--gold); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; }
         .spacer { width: 44%; }
 
-        /* --- BUTTONS & DETAILS --- */
         .btn {
             display: inline-block; margin: 8px 0; padding: 16px 30px; 
             background: var(--emerald); color: var(--champagne); text-decoration: none; 
@@ -159,8 +152,7 @@
         #navBtn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(1, 46, 35, 0.3), 0 0 15px var(--gold); }
         .btn-alt { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
         .btn-alt:hover { background: var(--gold); color: var(--emerald); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2); }
-        .btn::after { content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%; background: rgba(255,255,255,0.2); transform: rotate(30deg); transition: 0s; }
-        .btn:hover::after { left: 120%; transition: 0.8s ease; }
+        .btn::after { content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%; background: rgba(255,255,255,0.2); transform: rotate(30deg); transition: 0.8s ease; }
 
         #distance-tag { display: block; font-size: 0.65rem; color: var(--gold); margin-top: -5px; margin-bottom: 15px; font-weight: 600; letter-spacing: 1px; }
         #scratch-instr { font-size: 0.75rem; color: var(--gold); font-style: italic; margin-bottom: 10px; transition: opacity 0.5s;}
@@ -182,24 +174,20 @@
         <div class="envelope" id="envelope" onclick="openInv()">
             <div class="envelope-title">Wedding Invitation</div>
             <div class="envelope-flap"></div>
-            <div class="seal">
-                <img src="https://drive.google.com/thumbnail?id=1vRfNuKL5gBuVcv2mM_zaoGFG4PTfFjaw" alt="Seal Logo">
-            </div>
+            <div class="seal"><img src="https://drive.google.com/thumbnail?id=1vRfNuKL5gBuVcv2mM_zaoGFG4PTfFjaw" alt="Seal"></div>
             <p style="position: absolute; bottom: 35px; width: 100%; text-align: center; color: rgba(255,255,255,0.7); font-size: 0.75rem; letter-spacing: 5px; font-weight: 600;">TAP TO OPEN</p>
         </div>
 
         <div class="card" id="card">
-            <div style="width: 60px; height: 60px; margin: 0 auto 5px;"><img src="https://drive.google.com/thumbnail?id=1qlH_xifYWF4L483VX8GQlibq7gTI41ss" style="width:100%" alt="Lord Ganesha"></div>
-            <div style="font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; font-weight: 300; text-transform: uppercase; margin-bottom: 20px;">Om Shri Ganeshaya Namah:</div>
-            <p id="guestNameDisplay" style="margin: 15px 0; color: var(--emerald); font-weight: 600;"></p>
-            
-            <div style="width: 50px; height: 50px; margin: 0 auto 15px;">
-                <img src="https://drive.google.com/thumbnail?id=1beQfliXqIi0uLmmmbHoGIh6n1jwslWDW&sz=s1000" style="width:100%; height: 100%; object-fit: contain;" alt="Logo">
-            </div>
-            
+            <div style="width: 70px; height: 70px; margin: 0 auto 5px;"><img src="https://drive.google.com/thumbnail?id=1qlH_xifYWF4L483VX8GQlibq7gTI41ss" style="width:100%" alt="Ganesha"></div>
+            <div style="font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; font-weight: 400; text-transform: uppercase; margin-bottom: 10px;">Om Shri Ganeshaya Namah:</div>
+            <p id="guestNameDisplay" style="margin: 10px 0; color: var(--emerald); font-weight: 400;"></p>
+            <div style="width: 70px; height: 70px; margin: 0 auto 20px;"><img src="https://drive.google.com/thumbnail?id=1beQfliXqIi0uLmmmbHoGIh6n1jwslWDW&sz=s1000" style="width:100%; object-fit: contain;" alt="Logo"></div>
             <p style="font-size: 0.5rem; letter-spacing: 2px; font-weight: 600; color: var(--emerald); margin: 0;">TWO HEARTS, ONE JOURNEY</p>
-            <p style="font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; color: var(--emerald); margin-top: 10px;">YOU ARE CORDIALLY INVITED TO CELEBRATE</p>
+            <p style="font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; color: var(--emerald); margin-top: 15px;">YOU ARE CORDIALLY INVITED TO CELEBRATE</p>
+            
             <h1 class="main-names">Vara Kumar<span class="weds-text">weds</span>Sushma</h1>
+            
             <div class="couple-illustration"><img src="https://drive.google.com/thumbnail?id=1KDBHXqWuMNwxyMCfeEOarIyCsQM9cu2J&sz=s1000" alt="Illustration"></div>
             
             <div class="scratch-box">
@@ -218,51 +206,42 @@
             </div>
             <p id="scratch-instr">Scratch to reveal the date</p>
 
-            <div class="timeline-container" id="timeline">
-                <svg class="creeper-svg" viewBox="0 0 80 500" preserveAspectRatio="none">
-                    <path d="M40,0 C65,50 15,100 40,150 C65,200 15,250 40,300 C65,350 15,400 40,450 C65,500 15,500 40,500" stroke="#023d2f" stroke-width="2.5" fill="none" />
-                    <text x="40" y="25" font-size="20" fill="#c5a059">✿</text>
-                    <text x="30" y="100" font-size="16" fill="#c5a059">✿</text>
-                    <text x="50" y="180" font-size="18" fill="#c5a059">✿</text>
-                    <text x="25" y="250" font-size="20" fill="#c5a059">✿</text>
-                    <text x="55" y="320" font-size="16" fill="#c5a059">✿</text>
-                    <text x="35" y="400" font-size="18" fill="#c5a059">✿</text>
-                    <text x="40" y="480" font-size="20" fill="#c5a059">✿</text>
-                    <path d="M35,60 Q25,55 20,60 Q25,65 35,60 Z" fill="#012e23" />
-                    <path d="M45,80 Q55,75 60,80 Q55,75 45,80 Z" fill="#012e23" />
-                    <path d="M33,130 Q23,125 18,130 Q23,135 33,130 Z" fill="#012e23" />
-                    <path d="M47,210 Q57,205 62,210 Q57,205 47,210 Z" fill="#012e23" />
-                    <path d="M35,280 Q25,275 20,280 Q25,275 35,280 Z" fill="#012e23" />
-                    <path d="M45,350 Q55,345 60,350 Q55,345 45,350 Z" fill="#012e23" />
-                    <path d="M33,430 Q23,425 18,430 Q23,425 33,430 Z" fill="#012e23" />
-                </svg>
-                <div class="event-row">
-                    <div class="event-card left-event"><span class="event-time">6:00 PM</span><span class="event-name">Reception</span></div>
-                    <div class="spacer"></div>
+            <div id="post-scratch-content">
+                <div class="timeline-container" id="timeline">
+                    <svg class="creeper-svg" viewBox="0 0 80 435" preserveAspectRatio="none">
+                        <path d="M40,0 C65,50 15,100 40,150 C65,200 15,250 40,300 C65,350 15,400 40,425" stroke="#023d2f" stroke-width="2.5" fill="none" />
+                        <text x="40" y="25" font-size="20" fill="#c5a059">✿</text>
+                        <text x="30" y="100" font-size="16" fill="#c5a059">✿</text>
+                        <text x="50" y="180" font-size="18" fill="#c5a059">✿</text>
+                        <text x="25" y="250" font-size="20" fill="#c5a059">✿</text>
+                        <text x="55" y="320" font-size="16" fill="#c5a059">✿</text>
+                        <text x="35" y="400" font-size="18" fill="#c5a059">✿</text>
+                        <path d="M35,60 Q25,55 20,60 Q25,65 35,60 Z" fill="#012e23" />
+                        <path d="M45,80 Q55,75 60,80 Q55,75 45,80 Z" fill="#012e23" />
+                        <path d="M33,130 Q23,125 18,130 Q23,135 33,130 Z" fill="#012e23" />
+                        <path d="M47,210 Q57,205 62,210 Q57,205 47,210 Z" fill="#012e23" />
+                        <path d="M35,280 Q25,275 20,280 Q25,275 35,280 Z" fill="#012e23" />
+                        <path d="M45,350 Q55,345 60,350 Q55,345 45,350 Z" fill="#012e23" />
+                    </svg>
+                    <div class="event-row"><div class="event-card left-event"><span class="event-time">6:00 PM</span><span class="event-name">Reception</span></div><div class="spacer"></div></div>
+                    <div class="event-row"><div class="spacer"></div><div class="event-card right-event"><span class="event-time">7:00 PM Onwards</span><span class="event-name">Dinner</span></div></div>
+                    <div class="event-row"><div class="event-card left-event"><span class="event-time">12:18 AM</span><span class="event-name">Sumuhurtham</span><small style="font-size:0.75rem; color:#999;">Following Day</small></div><div class="spacer"></div></div>
                 </div>
-                <div class="event-row">
-                    <div class="spacer"></div>
-                    <div class="event-card right-event"><span class="event-time">7:00 PM Onwards</span><span class="event-name">Dinner</span></div>
-                </div>
-                <div class="event-row">
-                    <div class="event-card left-event"><span class="event-time">12:18 AM</span><span class="event-name">Sumuhurtham</span><small style="font-size:0.5rem; color:#999;">Following Day</small></div>
-                    <div class="spacer"></div>
-                </div>
-            </div>
 
-            <div class="details-text">
-                <strong style="color: var(--emerald); letter-spacing: 3px; font-size: 1rem;">THE CELEBRATION AT</strong><br>
-                PVK Prime Conventions, Viswaveswara Nagar, Auto Nagar, Gajuwaka, Vizag.
-            </div>
+                <div class="details-text">
+                    <strong style="color: var(--emerald); letter-spacing: 3px; font-size: 1rem;">THE CELEBRATION AT</strong><br>
+                    PVK Prime Conventions, Viswaveswara Nagar, Auto Nagar, Gajuwaka, Vizag.
+                </div>
 
-            <div style="margin-top: 35px;">
-                <span id="distance-tag">Calculating distance...</span>
-                <button id="navBtn" onclick="navigate()" class="btn">NAVIGATE ME</button><br>
-                <button onclick="saveToCalendar()" class="btn btn-alt">SAVE TO CALENDAR</button>
+                <div style="margin-top: 35px;">
+                    <span id="distance-tag">Calculating distance...</span>
+                    <button id="navBtn" onclick="navigate()" class="btn">NAVIGATE ME</button><br>
+                    <button onclick="saveToCalendar()" class="btn btn-alt">SAVE TO CALENDAR</button>
+                </div>
+                <div class="closing-message">We can't wait to celebrate our new beginning with you.</div>
+                <div class="thank-you">With Love</div>
+                <p style="font-size: 0.8rem; color: var(--gold); padding-bottom: 40px; letter-spacing: 3px;">#VaraKumarAndSushma</p>
             </div>
-            <div class="closing-message">We can't wait to celebrate our new beginning with you.</div>
-            <div class="thank-you">With Love</div>
-            <p style="font-size: 0.8rem; color: var(--gold); padding-bottom: 40px; letter-spacing: 3px;">#VaraKumarAndSushma</p>
         </div>
     </div>
 
@@ -292,10 +271,7 @@
                     petal.style.left = Math.random() * 100 + 'vw';
                     container.appendChild(petal);
                     const duration = Math.random() * 4000 + 4000;
-                    petal.animate([
-                        { transform: `translateY(0) rotate(0deg)`, opacity: 0.8 },
-                        { transform: `translateY(110dvh) rotate(1080deg)`, opacity: 0 }
-                    ], { duration: duration, easing: 'linear' });
+                    petal.animate([{ transform: `translateY(0) rotate(0deg)`, opacity: 0.8 },{ transform: `translateY(110dvh) rotate(1080deg)`, opacity: 0 }], { duration: duration, easing: 'linear' });
                     setTimeout(() => petal.remove(), duration);
                 }, i * 120);
             }
@@ -307,16 +283,17 @@
                     const R = 6371;
                     const dLat = (VENUE_COORDS.lat - pos.coords.latitude) * Math.PI / 180;
                     const dLon = (VENUE_COORDS.lng - pos.coords.longitude) * Math.PI / 180;
-                    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                              Math.cos(pos.coords.latitude * Math.PI / 180) * Math.cos(VENUE_COORDS.lat * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+                    const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(pos.coords.latitude * Math.PI / 180) * Math.cos(VENUE_COORDS.lat * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
                     const d = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
                     document.getElementById('distance-tag').innerText = `YOU ARE ${d.toFixed(1)} KM AWAY FROM THE VENUE`;
                 }, () => document.getElementById('distance-tag').innerText = "LOCATION ACCESS DISABLED");
             }
         }
 
+        // FIXED NAVIGATION FUNCTION
         function navigate() {
-            window.open(`https://www.google.com/maps/search/?api=1&query=${VENUE_COORDS.lat},${VENUE_COORDS.lng}`, '_blank');
+            const url = `https://www.google.com/maps/dir/?api=1&destination=${VENUE_COORDS.lat},${VENUE_COORDS.lng}`;
+            window.open(url, '_blank');
         }
 
         function saveToCalendar() {
@@ -325,10 +302,8 @@
             const location = "PVK Prime Conventions, Viswaveswara Nagar, Vizag";
             const start = "20260503T190000"; 
             const end = "20260503T235900";   
-
             const isAndroid = /Android/i.test(navigator.userAgent);
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
             if (isAndroid) {
                 const googleUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${start}/${end}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}`;
                 window.open(googleUrl, '_blank');
@@ -339,11 +314,7 @@
                 const icsData = ["BEGIN:VCALENDAR","VERSION:2.0","BEGIN:VEVENT",`DTSTART:${start}`,`DTEND:${end}`,`SUMMARY:${title}`,`DESCRIPTION:${details}`,`LOCATION:${location}`,"END:VEVENT","END:VCALENDAR"].join("\n");
                 const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
                 const link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.setAttribute('download', 'wedding_invitation.ics');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                link.href = window.URL.createObjectURL(blob); link.setAttribute('download', 'wedding_invite.ics'); document.body.appendChild(link); link.click(); document.body.removeChild(link);
             }
         }
 
@@ -396,14 +367,16 @@
                     revealed = true; ctx.clearRect(0, 0, 320, 170);
                     startPetalRain(); 
                     confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 }, colors: ['#8B0000', '#D4AF37', '#FFD700', '#f4e8d1'], gravity: 1.2 });
+                    
                     document.getElementById('marriage-text').style.opacity = '1';
                     document.getElementById('wedding-date-revealed').style.opacity = '1';
                     document.getElementById('timer').style.opacity = '1';
                     document.getElementById('big-day-label').style.opacity = '1'; 
                     document.getElementById('scratch-instr').style.opacity = '0';
-                    const timeline = document.getElementById('timeline');
-                    timeline.style.display = 'block';
-                    setTimeout(() => { timeline.style.opacity = '1'; initScrollAnimations(); }, 100);
+                    
+                    const postContent = document.getElementById('post-scratch-content');
+                    postContent.style.display = 'block';
+                    setTimeout(() => { postContent.style.opacity = '1'; initScrollAnimations(); }, 100);
                     startTimer();
                 }
             }

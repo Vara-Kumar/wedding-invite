@@ -315,50 +315,60 @@
         }
 
         function navigate() {
-            window.open(`https://www.google.com/maps?q=${VENUE_COORDS.lat},${VENUE_COORDS.lng}`, '_blank');
+            window.open(`http://googleusercontent.com/maps.google.com/maps?q=${VENUE_COORDS.lat},${VENUE_COORDS.lng}`, '_blank');
         }
 
         function saveToCalendar() {
-            const icsData = [
-                "BEGIN:VCALENDAR",
-                "VERSION:2.0",
-                "BEGIN:VEVENT",
-                "DTSTART:20260503T133000Z", 
-                "DTEND:20260503T183000Z",
-                "SUMMARY:Vara Kumar & Sushma Wedding Celebration",
-                "DESCRIPTION:We can't wait to celebrate our new beginning with you!",
-                "LOCATION:PVK Prime Conventions, Viswaveswara Nagar, Vizag",
-                "END:VEVENT",
-                "END:VCALENDAR"
-            ].join("\n");
-            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.setAttribute('download', 'wedding_invitation.ics');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const title = "Vara Kumar & Sushma Wedding";
+            const details = "We can't wait to celebrate our new beginning with you!";
+            const location = "PVK Prime Conventions, Viswaveswara Nagar, Vizag";
+            const start = "20260503T190000"; 
+            const end = "20260503T235900";   
+
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+            if (isAndroid) {
+                // Open direct Google Calendar link for Android to trigger the app
+                const googleUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${start}/${end}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}`;
+                window.open(googleUrl, '_blank');
+            } else if (isIOS) {
+                // For iOS, data URI with ics content triggers the Calendar app import
+                const icsContent = [
+                    "BEGIN:VCALENDAR",
+                    "VERSION:2.0",
+                    "BEGIN:VEVENT",
+                    `DTSTART:${start}`,
+                    `DTEND:${end}`,
+                    `SUMMARY:${title}`,
+                    `DESCRIPTION:${details}`,
+                    `LOCATION:${location}`,
+                    "END:VEVENT",
+                    "END:VCALENDAR"
+                ].join("\n");
+                window.location.href = "data:text/calendar;charset=utf8," + encodeURIComponent(icsContent);
+            } else {
+                // Fallback for Desktop: Download ICS file
+                const icsData = ["BEGIN:VCALENDAR","VERSION:2.0","BEGIN:VEVENT",`DTSTART:${start}`,`DTEND:${end}`,`SUMMARY:${title}`,`DESCRIPTION:${details}`,`LOCATION:${location}`,"END:VEVENT","END:VCALENDAR"].join("\n");
+                const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.setAttribute('download', 'wedding_invitation.ics');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
         }
 
         function openInv() {
             if (navigator.vibrate) navigator.vibrate(15);
             const music = document.getElementById('bgMusic');
-            music.volume = 0;
-            music.play().then(() => {
+            music.volume = 0; music.play().then(() => {
                 let vol = 0;
-                const duration = 1000; // 1 second fade
-                const interval = 50; 
-                const steps = duration / interval;
-                const volStep = 0.2 / steps; // Target volume 0.2
-
                 const fadeIn = setInterval(() => {
-                    if (vol < 0.2) { 
-                        vol += volStep; 
-                        music.volume = Math.min(vol, 0.2); 
-                    } else {
-                        clearInterval(fadeIn);
-                    }
-                }, interval);
+                    if (vol < 0.2) { vol += 0.01; music.volume = vol; }
+                    else clearInterval(fadeIn);
+                }, 50);
             });
             document.getElementById('envelope').classList.add('open');
             setTimeout(() => {
@@ -371,19 +381,12 @@
         function initScratch() {
             const canvas = document.getElementById('scratch-canvas');
             const ctx = canvas.getContext('2d');
-            let isDrawing = false;
-            let revealed = false;
-
+            let isDrawing = false; let revealed = false;
             const metallicGradient = ctx.createLinearGradient(0, 0, 320, 170);
-            metallicGradient.addColorStop(0, '#BF953F');   
-            metallicGradient.addColorStop(0.2, '#FCF6BA'); 
-            metallicGradient.addColorStop(0.4, '#B38728'); 
-            metallicGradient.addColorStop(0.6, '#FBF5B7'); 
-            metallicGradient.addColorStop(0.8, '#AA771C'); 
-            metallicGradient.addColorStop(1, '#D4AF37');   
-
-            ctx.fillStyle = metallicGradient;
-            ctx.fillRect(0, 0, 320, 170);
+            metallicGradient.addColorStop(0, '#BF953F'); metallicGradient.addColorStop(0.2, '#FCF6BA'); 
+            metallicGradient.addColorStop(0.4, '#B38728'); metallicGradient.addColorStop(0.6, '#FBF5B7'); 
+            metallicGradient.addColorStop(0.8, '#AA771C'); metallicGradient.addColorStop(1, '#D4AF37');   
+            ctx.fillStyle = metallicGradient; ctx.fillRect(0, 0, 320, 170);
 
             function scratch(e) {
                 if(!isDrawing) return;
@@ -401,30 +404,17 @@
                 let count = 0;
                 for (let i = 3; i < data.length; i += 4) if (data[i] === 0) count++;
                 if (count > (320 * 170 * 0.70) && !revealed) {
-                    revealed = true;
-                    ctx.clearRect(0, 0, 320, 170);
+                    revealed = true; ctx.clearRect(0, 0, 320, 170);
                     startPetalRain(); 
-                    confetti({ 
-                        particleCount: 200, 
-                        spread: 80, 
-                        origin: { y: 0.6 }, 
-                        colors: ['#8B0000', '#D4AF37', '#FFD700', '#f4e8d1'],
-                        gravity: 1.2,
-                        ticks: 400
-                    });
-                    
+                    confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 }, colors: ['#8B0000', '#D4AF37', '#FFD700', '#f4e8d1'], gravity: 1.2 });
                     document.getElementById('marriage-text').style.opacity = '1';
                     document.getElementById('wedding-date-revealed').style.opacity = '1';
                     document.getElementById('timer').style.opacity = '1';
                     document.getElementById('big-day-label').style.opacity = '1'; 
                     document.getElementById('scratch-instr').style.opacity = '0';
-                    
                     const timeline = document.getElementById('timeline');
                     timeline.style.display = 'block';
-                    setTimeout(() => { 
-                        timeline.style.opacity = '1'; 
-                        initScrollAnimations();
-                    }, 100);
+                    setTimeout(() => { timeline.style.opacity = '1'; initScrollAnimations(); }, 100);
                     startTimer();
                 }
             }
@@ -447,8 +437,7 @@
             const target = new Date("May 3, 2026 19:00:00").getTime();
             setInterval(() => {
                 const now = new Date().getTime();
-                const d = target - now;
-                if (d < 0) return;
+                const d = target - now; if (d < 0) return;
                 document.getElementById('days').innerText = Math.floor(d / 86400000);
                 document.getElementById('hours').innerText = Math.floor((d % 86400000) / 3600000);
                 document.getElementById('mins').innerText = Math.floor((d % 3600000) / 60000);

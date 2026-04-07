@@ -126,6 +126,7 @@
         .timer-unit label { font-size: 0.55rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
         .big-day-text { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; font-weight: 600; margin-top: 10px; opacity: 0; transition: 1s; }
 
+        /* --- CREEPER & EVENTS SECTION --- */
         .timeline-container {
             position: relative; max-width: 500px; margin: 40px auto; padding: 20px 0;
             opacity: 0; transition: opacity 1.5s ease; display: none;
@@ -150,6 +151,7 @@
         .event-time { color: var(--gold); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; }
         .spacer { width: 42%; }
 
+        /* --- BUTTONS --- */
         .btn {
             display: inline-block; margin: 10px 0; padding: 16px 40px; 
             background: var(--emerald); color: var(--champagne); text-decoration: none; 
@@ -157,7 +159,6 @@
             border: none; border-radius: 60px; width: 100%; max-width: 300px;
             position: relative; overflow: hidden; cursor: pointer; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         #navBtn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(1, 46, 35, 0.3), 0 0 15px var(--gold); }
         .btn-alt { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
         .btn-alt:hover { background: var(--gold); color: var(--emerald); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2); }
@@ -193,7 +194,7 @@
         <div class="card" id="card">
             <div class="ganesha-icon"><img src="https://drive.google.com/thumbnail?id=1qlH_xifYWF4L483VX8GQlibq7gTI41ss" alt="Lord Ganesha"></div>
             <div class="blessing-text">Om Shri Ganeshaya Namah:</div>
-            <p class="guest-welcome" id="guestNameDisplay"></p>
+            <p class="guest-welcome" id="guestNameDisplay" style="margin: 15px 0; color: var(--emerald); font-weight: 600;"></p>
             <div class="card-header-logo"><img src="https://drive.google.com/thumbnail?id=1beQfliXqIi0uLmmmbHoGIh6n1jwslWDW&sz=s1000" alt="Logo"></div>
             <p style="font-size: 0.5rem; letter-spacing: 2px; font-weight: 600; color: var(--emerald);">TWO HEARTS, ONE JOURNEY</p>
             <p style="font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; color: var(--emerald); margin-top: 10px;">YOU ARE CORDIALLY INVITED TO CELEBRATE</p>
@@ -234,7 +235,6 @@
                     <path d="M45,350 Q55,345 60,350 Q55,355 45,350 Z" fill="#012e23" />
                     <path d="M33,430 Q23,425 18,430 Q23,435 33,430 Z" fill="#012e23" />
                 </svg>
-
                 <div class="event-row">
                     <div class="event-card left-event"><span class="event-time">6:00 PM</span><span class="event-name">Reception</span></div>
                     <div class="spacer"></div>
@@ -315,7 +315,7 @@
         }
 
         function navigate() {
-            window.open(`https://www.google.com/maps/dir/?api=1&destination=${VENUE_COORDS.lat},${VENUE_COORDS.lng}`, '_blank');
+            window.open(`https://www.google.com/maps?q=${VENUE_COORDS.lat},${VENUE_COORDS.lng}`, '_blank');
         }
 
         function saveToCalendar() {
@@ -331,7 +331,6 @@
                 "END:VEVENT",
                 "END:VCALENDAR"
             ].join("\n");
-            
             const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
@@ -347,10 +346,19 @@
             music.volume = 0;
             music.play().then(() => {
                 let vol = 0;
+                const duration = 1000; // 1 second fade
+                const interval = 50; 
+                const steps = duration / interval;
+                const volStep = 0.2 / steps; // Target volume 0.2
+
                 const fadeIn = setInterval(() => {
-                    if (vol < 0.15) { vol += 0.01; music.volume = vol; }
-                    else clearInterval(fadeIn);
-                }, 100);
+                    if (vol < 0.2) { 
+                        vol += volStep; 
+                        music.volume = Math.min(vol, 0.2); 
+                    } else {
+                        clearInterval(fadeIn);
+                    }
+                }, interval);
             });
             document.getElementById('envelope').classList.add('open');
             setTimeout(() => {

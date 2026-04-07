@@ -97,7 +97,6 @@
         }
         .card.reveal { opacity: 1; visibility: visible; top: 50%; transform: translate(-50%, -50%); }
 
-        /* Names Header - FIXED THE CUT OFF V */
         .main-names { 
             font-family: 'Great Vibes', cursive; 
             font-size: clamp(3rem, 11vw, 4.5rem); 
@@ -112,8 +111,18 @@
         @keyframes foilShine { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
         .weds-text { font-size: 1.6rem; color: var(--gold); display: block; margin: -15px 0; font-weight: 300; }
         
-        .couple-illustration { width: 100%; max-width: 400px; margin: -15px auto 10px; }
-        .couple-illustration img { width: 100%; height: auto; }
+        /* SHARPNESS FIX FOR COUPLE IMAGE */
+        .couple-illustration { width: 100%; max-width: 400px; margin: -15px auto 10px; overflow: hidden; }
+        .couple-illustration img { 
+            width: 100%; 
+            height: auto; 
+            display: block;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: high-quality;
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
 
         .scratch-box {
             position: relative; width: 100%; max-width: 320px; height: 170px; margin: 30px auto 10px;
@@ -188,7 +197,9 @@
             
             <h1 class="main-names">Vara Kumar<span class="weds-text">weds</span>Sushma</h1>
             
-            <div class="couple-illustration"><img src="https://drive.google.com/thumbnail?id=1KDBHXqWuMNwxyMCfeEOarIyCsQM9cu2J&sz=s1000" alt="Illustration"></div>
+            <div class="couple-illustration">
+                <img src="https://lh3.googleusercontent.com/d/1PAbl8dJUc_PfhS534f0ih_R_U7FolFrO=w1000" alt="Vara Kumar and Sushma illustration">
+            </div>
             
             <div class="scratch-box">
                 <canvas id="scratch-canvas" width="320" height="170"></canvas>
@@ -216,12 +227,6 @@
                         <text x="25" y="250" font-size="20" fill="#c5a059">✿</text>
                         <text x="55" y="320" font-size="16" fill="#c5a059">✿</text>
                         <text x="35" y="400" font-size="18" fill="#c5a059">✿</text>
-                        <path d="M35,60 Q25,55 20,60 Q25,65 35,60 Z" fill="#012e23" />
-                        <path d="M45,80 Q55,75 60,80 Q55,75 45,80 Z" fill="#012e23" />
-                        <path d="M33,130 Q23,125 18,130 Q23,135 33,130 Z" fill="#012e23" />
-                        <path d="M47,210 Q57,205 62,210 Q57,205 47,210 Z" fill="#012e23" />
-                        <path d="M35,280 Q25,275 20,280 Q25,275 35,280 Z" fill="#012e23" />
-                        <path d="M45,350 Q55,345 60,350 Q55,345 45,350 Z" fill="#012e23" />
                     </svg>
                     <div class="event-row"><div class="event-card left-event"><span class="event-time">6:00 PM</span><span class="event-name">Reception</span></div><div class="spacer"></div></div>
                     <div class="event-row"><div class="spacer"></div><div class="event-card right-event"><span class="event-time">7:00 PM Onwards</span><span class="event-name">Dinner</span></div></div>
@@ -290,7 +295,6 @@
             }
         }
 
-        // FIXED NAVIGATION FUNCTION
         function navigate() {
             const url = `https://www.google.com/maps/dir/?api=1&destination=${VENUE_COORDS.lat},${VENUE_COORDS.lng}`;
             window.open(url, '_blank');

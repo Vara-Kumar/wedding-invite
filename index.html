@@ -123,8 +123,8 @@
         #post-scratch-content { opacity: 0; display: none; transition: opacity 1.5s ease; }
 
         /* --- TIMELINE UPDATES --- */
-        .timeline-container { position: relative; max-width: 500px; margin: 40px auto 0px; padding: 20px 0 10px; }
-        .creeper-svg { position: absolute; left: 50%; top: 0; bottom: 0; width: 80px; height: 92%; transform: translateX(-50%); z-index: 1; }
+        .timeline-container { position: relative; max-width: 500px; margin: 40px auto 0px; padding: 20px 0 0px; }
+        .creeper-svg { position: absolute; left: 50%; top: 0; bottom: 0; width: 80px; height: 88%; transform: translateX(-50%); z-index: 1; }
         
         .event-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 35px; position: relative; z-index: 2; }
         .event-card { 
@@ -136,15 +136,17 @@
         .event-row.is-visible .event-card { opacity: 1; transform: translateX(0); }
         
         /* Icon styling */
-        .event-img { width: 55px; height: 55px; object-fit: contain; flex-shrink: 0; display: block; }
-        .reception-size { width: 62px; height: 62px; } /* Increased Reception Size */
+        .event-img { width: 55px; height: 55px; object-fit: contain; flex-shrink: 0; display: block; image-rendering: high-quality; }
+        .reception-size { width: 62px; height: 62px; } /* Corrected reception size for mobile */
+        
+        /* requested 'embedded' look: sharp image, rounded, but softly blurred edges */
         .sumuhurtham-blend { 
             border-radius: 50%; /* Rounds the sharp borders */
             filter: blur(0.3px); /* Softens edge transitions */
             mix-blend-mode: multiply; /* Blends white/light backgrounds into the paper texture */
         }
 
-        .event-content { display: flex; flex-direction: column; }
+        .event-content { display: flex; flex-direction: column; overflow: hidden; } /* Fixes display issues on left */
         .event-name { font-family: 'Great Vibes', cursive; font-size: 1.8rem; color: var(--emerald); display: block; line-height: 1.2; }
         .event-time { color: var(--gold); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 2px; }
         .spacer { width: 44%; }
@@ -388,10 +390,9 @@
                 ctx.globalCompositeOperation = 'destination-out';
                 ctx.beginPath(); ctx.arc(x, y, 25, 0, Math.PI*2); ctx.fill();
                 if (navigator.vibrate) navigator.vibrate(10);
-                checkScratch();
             }
 
-            function checkScratch() {
+            function checkScratchStatus() {
                 const data = ctx.getImageData(0, 0, 320, 170).data;
                 let count = 0;
                 for (let i = 3; i < data.length; i += 4) if (data[i] === 0) count++;
@@ -414,16 +415,16 @@
             }
             canvas.onmousedown = () => isDrawing = true;
             window.onmouseup = () => isDrawing = false;
-            canvas.onmousemove = scratch;
+            canvas.onmousemove = (e) => { scratch(e); checkScratchStatus(); };
             canvas.ontouchstart = (e) => { isDrawing = true; scratch(e); };
-            canvas.ontouchmove = (e) => { e.preventDefault(); scratch(e); };
+            canvas.ontouchmove = (e) => { e.preventDefault(); scratch(e); checkScratchStatus(); };
             canvas.ontouchend = () => isDrawing = false;
         }
 
         function initScrollAnimations() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('is-visible'); });
-            }, { threshold: 0.2 });
+            }, { threshold: 0.1 });
             document.querySelectorAll('.event-row').forEach(row => observer.observe(row));
         }
 

@@ -27,13 +27,11 @@
             background: radial-gradient(circle at center, var(--emerald-light), var(--emerald));
         }
 
-        /* --- SCROLLER --- */
         .card::-webkit-scrollbar { width: 5px; }
         .card::-webkit-scrollbar-track { background: rgba(197, 160, 89, 0.05); margin: 20px 0; }
         .card::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
         .card { scrollbar-width: thin; scrollbar-color: var(--gold) rgba(197, 160, 89, 0.05); }
 
-        /* --- BACKGROUND LANTERNS --- */
         #lantern-field { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
         .lantern {
             position: absolute; background: var(--lantern-glow);
@@ -56,7 +54,6 @@
 
         .wrapper { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 10; padding: 20px; }
 
-        /* --- ENVELOPE --- */
         .envelope {
             position: relative; width: 95%; max-width: 500px; height: 340px; 
             background-color: #01362a;
@@ -84,7 +81,6 @@
         .envelope:hover .seal { transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(0 0 15px rgba(197, 160, 89, 0.8)); }
         .seal img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* --- INVITATION CARD --- */
         .card {
             position: fixed; top: 100%; left: 50%; transform: translate(-50%, 0);
             width: 96vw; max-width: 600px; height: 92dvh; opacity: 0; visibility: hidden;
@@ -98,12 +94,8 @@
         .card.reveal { opacity: 1; visibility: visible; top: 50%; transform: translate(-50%, -50%); }
 
         .main-names { 
-            font-family: 'Great Vibes', cursive; 
-            font-size: clamp(3rem, 11vw, 4.5rem); 
-            margin: 35px 0 0px; 
-            padding-top: 10px; 
-            font-weight: 300; 
-            line-height: 1.4;
+            font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 11vw, 4.5rem); 
+            margin: 35px 0 0px; padding-top: 10px; font-weight: 300; line-height: 1.4;
             background: linear-gradient(135deg, var(--emerald) 40%, #fff 50%, var(--emerald) 60%);
             background-size: 200% 100%; -webkit-background-clip: text;
             -webkit-text-fill-color: transparent; animation: foilShine 6s infinite linear;
@@ -111,18 +103,8 @@
         @keyframes foilShine { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
         .weds-text { font-size: 1.6rem; color: var(--gold); display: block; margin: -15px 0; font-weight: 300; }
         
-        /* SHARPNESS FIX FOR COUPLE IMAGE */
         .couple-illustration { width: 100%; max-width: 400px; margin: -15px auto 10px; overflow: hidden; }
-        .couple-illustration img { 
-            width: 100%; 
-            height: auto; 
-            display: block;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: high-quality;
-            will-change: transform;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
+        .couple-illustration img { width: 100%; height: auto; display: block; image-rendering: high-quality; }
 
         .scratch-box {
             position: relative; width: 100%; max-width: 320px; height: 170px; margin: 30px auto 10px;
@@ -140,15 +122,31 @@
 
         #post-scratch-content { opacity: 0; display: none; transition: opacity 1.5s ease; }
 
-        .timeline-container { position: relative; max-width: 500px; margin: 40px auto; padding: 20px 0; }
-        .creeper-svg { position: absolute; left: 50%; top: 0; bottom: 0; width: 80px; transform: translateX(-50%); z-index: 1; }
-        .event-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 50px; position: relative; z-index: 2; }
-        .event-card { width: 44%; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--gold-light); opacity: 0; transition: 0.9s cubic-bezier(0.17, 0.55, 0.55, 1); }
-        .left-event { transform: translateX(-30px); text-align: right; }
-        .right-event { transform: translateX(30px); text-align: left; }
+        /* --- TIMELINE UPDATES --- */
+        .timeline-container { position: relative; max-width: 500px; margin: 40px auto 0px; padding: 20px 0 10px; }
+        .creeper-svg { position: absolute; left: 50%; top: 0; bottom: 0; width: 80px; height: 92%; transform: translateX(-50%); z-index: 1; }
+        
+        .event-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 35px; position: relative; z-index: 2; }
+        .event-card { 
+            width: 44%; padding: 5px; background: transparent; opacity: 0; 
+            transition: 0.9s cubic-bezier(0.17, 0.55, 0.55, 1); display: flex; align-items: center; gap: 12px;
+        }
+        .left-event { transform: translateX(-30px); text-align: right; justify-content: flex-end; }
+        .right-event { transform: translateX(30px); text-align: left; justify-content: flex-start; }
         .event-row.is-visible .event-card { opacity: 1; transform: translateX(0); }
-        .event-name { font-family: 'Great Vibes', cursive; font-size: 1.6rem; color: var(--emerald); display: block; }
-        .event-time { color: var(--gold); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; }
+        
+        /* Icon styling */
+        .event-img { width: 55px; height: 55px; object-fit: contain; flex-shrink: 0; display: block; }
+        .reception-size { width: 62px; height: 62px; } /* Increased Reception Size */
+        .sumuhurtham-blend { 
+            border-radius: 50%; /* Rounds the sharp borders */
+            filter: blur(0.3px); /* Softens edge transitions */
+            mix-blend-mode: multiply; /* Blends white/light backgrounds into the paper texture */
+        }
+
+        .event-content { display: flex; flex-direction: column; }
+        .event-name { font-family: 'Great Vibes', cursive; font-size: 1.8rem; color: var(--emerald); display: block; line-height: 1.2; }
+        .event-time { color: var(--gold); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 2px; }
         .spacer { width: 44%; }
 
         .btn {
@@ -161,11 +159,10 @@
         #navBtn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(1, 46, 35, 0.3), 0 0 15px var(--gold); }
         .btn-alt { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
         .btn-alt:hover { background: var(--gold); color: var(--emerald); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2); }
-        .btn::after { content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%; background: rgba(255,255,255,0.2); transform: rotate(30deg); transition: 0.8s ease; }
 
         #distance-tag { display: block; font-size: 0.65rem; color: var(--gold); margin-top: -5px; margin-bottom: 15px; font-weight: 600; letter-spacing: 1px; }
         #scratch-instr { font-size: 0.75rem; color: var(--gold); font-style: italic; margin-bottom: 10px; transition: opacity 0.5s;}
-        .details-text { font-size: 0.95rem; line-height: 2; color: var(--soft-text); margin-top: 20px; padding-top: 25px; border-top: 1px solid #eee; }
+        .details-text { font-size: 0.95rem; line-height: 2; color: var(--soft-text); margin-top: 0px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
         .closing-message { margin: 60px auto 20px; font-style: italic; color: var(--soft-text); font-size: 1rem; max-width: 80%; }
         .thank-you { font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--gold); margin-top: 10px; font-weight: 300; }
     </style>
@@ -183,12 +180,12 @@
         <div class="envelope" id="envelope" onclick="openInv()">
             <div class="envelope-title">Wedding Invitation</div>
             <div class="envelope-flap"></div>
-            <div class="seal"><img src="https://drive.google.com/thumbnail?id=1vRfNuKL5gBuVcv2mM_zaoGFG4PTfFjaw" alt="Seal"></div>
+            <div class="seal"><img src="https://drive.google.com/thumbnail?id=1vRfNuKL5gBuVcv2mM_zaoGFG4PTfFjaw&sz=s1000" alt="Seal"></div>
             <p style="position: absolute; bottom: 35px; width: 100%; text-align: center; color: rgba(255,255,255,0.7); font-size: 0.75rem; letter-spacing: 5px; font-weight: 600;">TAP TO OPEN</p>
         </div>
 
         <div class="card" id="card">
-            <div style="width: 70px; height: 70px; margin: 0 auto 5px;"><img src="https://drive.google.com/thumbnail?id=1qlH_xifYWF4L483VX8GQlibq7gTI41ss" style="width:100%" alt="Ganesha"></div>
+            <div style="width: 70px; height: 70px; margin: 0 auto 5px;"><img src="https://drive.google.com/thumbnail?id=1qlH_xifYWF4L483VX8GQlibq7gTI41ss&sz=s1000" style="width:100%" alt="Ganesha"></div>
             <div style="font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; font-weight: 400; text-transform: uppercase; margin-bottom: 10px;">Om Shri Ganeshaya Namah:</div>
             <p id="guestNameDisplay" style="margin: 10px 0; color: var(--emerald); font-weight: 400;"></p>
             <div style="width: 70px; height: 70px; margin: 0 auto 20px;"><img src="https://drive.google.com/thumbnail?id=1beQfliXqIi0uLmmmbHoGIh6n1jwslWDW&sz=s1000" style="width:100%; object-fit: contain;" alt="Logo"></div>
@@ -228,9 +225,40 @@
                         <text x="55" y="320" font-size="16" fill="#c5a059">✿</text>
                         <text x="35" y="400" font-size="18" fill="#c5a059">✿</text>
                     </svg>
-                    <div class="event-row"><div class="event-card left-event"><span class="event-time">6:00 PM</span><span class="event-name">Reception</span></div><div class="spacer"></div></div>
-                    <div class="event-row"><div class="spacer"></div><div class="event-card right-event"><span class="event-time">7:00 PM Onwards</span><span class="event-name">Dinner</span></div></div>
-                    <div class="event-row"><div class="event-card left-event"><span class="event-time">12:18 AM</span><span class="event-name">Sumuhurtham</span><small style="font-size:0.75rem; color:#999;">Following Day</small></div><div class="spacer"></div></div>
+                    
+                    <div class="event-row">
+                        <div class="event-card left-event">
+                            <div class="event-content">
+                                <span class="event-time">6:00 PM</span>
+                                <span class="event-name">Reception</span>
+                            </div>
+                            <img src="https://drive.google.com/thumbnail?id=1mHnY71ZWjVIPOa3IlQZzn2IGKDngCEEW&sz=s1000" class="event-img reception-size" alt="Reception Icon">
+                        </div>
+                        <div class="spacer"></div>
+                    </div>
+
+                    <div class="event-row">
+                        <div class="spacer"></div>
+                        <div class="event-card right-event">
+                            <img src="https://drive.google.com/thumbnail?id=15i_UlZzT1ZW-DxwFt3a7SyGMRD6M9QNs&sz=s1000" class="event-img" alt="Dinner Icon">
+                            <div class="event-content">
+                                <span class="event-time">7:00 PM Onwards</span>
+                                <span class="event-name">Dinner</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-row">
+                        <div class="event-card left-event">
+                            <div class="event-content">
+                                <span class="event-time">12:18 AM</span>
+                                <span class="event-name">Sumuhurtham</span>
+                                <small style="font-size:0.6rem; color:#999; letter-spacing: 1px;">FOLLOWING DAY</small>
+                            </div>
+                            <img src="https://drive.google.com/thumbnail?id=1t1AM3MV3Fr0ylAFoNg4FyQY8LhsLy6sx&sz=s1000" class="event-img sumuhurtham-blend" alt="Sumuhurtham Icon">
+                        </div>
+                        <div class="spacer"></div>
+                    </div>
                 </div>
 
                 <div class="details-text">

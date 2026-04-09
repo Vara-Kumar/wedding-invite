@@ -16,6 +16,7 @@
             --soft-text: #4a4a4a;
             --lantern-glow: rgba(197, 160, 89, 0.8);
             --petal-color: #8B0000;
+            --leaf-green: #014d3a; /* Dark green for leaves */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -78,7 +79,6 @@
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 140px; height: 140px; z-index: 4; display: flex; align-items: center; justify-content: center; transition: 0.3s ease;
         }
-        .envelope:hover .seal { transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(0 0 15px rgba(197, 160, 89, 0.8)); }
         .seal img { width: 100%; height: 100%; object-fit: contain; }
 
         .card {
@@ -86,7 +86,7 @@
             width: 96vw; max-width: 600px; height: 92dvh; opacity: 0; visibility: hidden;
             transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
             z-index: 20; background-color: #fdfbf4;
-            background-image: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.7) 0%, transparent 100%), url("https://www.transparenttextures.com/patterns/cream-paper.png");
+            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
             border: 1px solid rgba(0,0,0,0.05);
             box-shadow: inset 0 0 80px rgba(255,255,255,0.5), 0 20px 70px rgba(0,0,0,0.3);
             overflow-y: auto; overflow-x: hidden; padding: 40px 5% 100px; text-align: center;
@@ -123,30 +123,26 @@
         #post-scratch-content { opacity: 0; display: none; transition: opacity 1.5s ease; }
 
         /* --- TIMELINE --- */
-        .timeline-container { position: relative; max-width: 500px; margin: 40px auto 0px; padding: 20px 0 10px; }
-        .creeper-svg { position: absolute; left: 50%; top: 0; bottom: 0; width: 60px; height: 95%; transform: translateX(-50%); z-index: 1; }
+        .timeline-container { position: relative; max-width: 500px; margin: 30px auto 5px; padding: 0; }
+        .creeper-svg { position: absolute; left: 50%; top: 0; bottom: 0; width: 60px; height: 100%; transform: translateX(-50%); z-index: 1; }
         
-        .event-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 35px; position: relative; z-index: 2; }
+        .event-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 20px; position: relative; z-index: 2; }
         .event-card { 
-            width: 47%; padding: 5px; background: transparent; opacity: 0; 
-            transition: 0.9s cubic-bezier(0.17, 0.55, 0.55, 1); display: flex; align-items: center; gap: 10px;
+            width: 48%; padding: 5px; background: transparent; opacity: 0; 
+            transition: 0.9s cubic-bezier(0.17, 0.55, 0.55, 1); display: flex; flex-direction: column; align-items: center; gap: 5px;
         }
-        .left-event { transform: translateX(-20px); text-align: right; justify-content: flex-end; }
-        .right-event { transform: translateX(20px); text-align: left; justify-content: flex-start; }
+        .left-event { transform: translateX(-15px); text-align: center; }
+        .right-event { transform: translateX(15px); text-align: center; }
         .event-row.is-visible .event-card { opacity: 1; transform: translateX(0); }
         
-        .event-img { width: 50px; height: 50px; object-fit: contain; flex-shrink: 0; display: block; image-rendering: -webkit-optimize-contrast; }
-        .reception-size { width: 58px; height: 58px; } 
+        .event-img { width: 50px; height: 50px; object-fit: contain; flex-shrink: 0; display: block; image-rendering: high-quality; }
+        .reception-size { width: 65px; height: 65px; } 
 
-        .sumuhurtham-sharp-fade { 
-            border-radius: 8px;
-            -webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%);
-            mask-image: radial-gradient(circle, black 60%, transparent 100%);
-        }
+        .sumuhurtham-rounded { border-radius: 12px; background: transparent; }
 
-        .event-content { display: flex; flex-direction: column; min-width: 0; } 
-        .event-name { font-family: 'Great Vibes', cursive; font-size: 1.6rem; color: var(--emerald); display: block; line-height: 1.1; white-space: nowrap; }
-        .event-time { color: var(--gold); font-weight: 700; font-size: 0.7rem; letter-spacing: 1px; margin-bottom: 2px; }
+        .event-content { display: flex; flex-direction: column; align-items: center; width: 100%; } 
+        .event-name { font-family: 'Great Vibes', cursive; font-size: 1.6rem; color: var(--emerald); display: block; line-height: 1.1; margin-top: 2px; }
+        .event-time { color: var(--gold); font-weight: 700; font-size: 0.7rem; letter-spacing: 1px; }
         .spacer { width: 40%; }
 
         .btn {
@@ -154,15 +150,13 @@
             background: var(--emerald); color: var(--champagne); text-decoration: none; 
             font-size: 0.75rem; letter-spacing: 2px; font-weight: 600;
             border: none; border-radius: 60px; width: 100%; max-width: 280px;
-            position: relative; overflow: hidden; cursor: pointer; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; overflow: hidden; cursor: pointer; transition: 0.4s;
         }
-        #navBtn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(1, 46, 35, 0.3), 0 0 15px var(--gold); }
         .btn-alt { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
-        .btn-alt:hover { background: var(--gold); color: var(--emerald); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2); }
 
         #distance-tag { display: block; font-size: 0.65rem; color: var(--gold); margin-top: -5px; margin-bottom: 15px; font-weight: 600; letter-spacing: 1px; }
         #scratch-instr { font-size: 0.75rem; color: var(--gold); font-style: italic; margin-bottom: 10px; transition: opacity 0.5s;}
-        .details-text { font-size: 0.95rem; line-height: 2; color: var(--soft-text); margin-top: 5px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
+        .details-text { font-size: 0.95rem; line-height: 1.8; color: var(--soft-text); margin-top: 0px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.05); }
         .closing-message { margin: 60px auto 20px; font-style: italic; color: var(--soft-text); font-size: 1rem; max-width: 80%; }
         .thank-you { font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--gold); margin-top: 10px; font-weight: 300; }
     </style>
@@ -217,22 +211,33 @@
             <div id="post-scratch-content">
                 <div class="timeline-container" id="timeline">
                     <svg class="creeper-svg" viewBox="0 0 80 435" preserveAspectRatio="none">
-                        <path d="M40,0 C65,50 15,100 40,150 C65,200 15,250 40,300 C65,350 15,400 40,425" stroke="#023d2f" stroke-width="2.5" fill="none" />
+                        <path d="M40,0 C65,50 15,100 40,150 C65,200 15,250 40,300 C65,350 15,400 40,435" stroke="#023d2f" stroke-width="2.5" fill="none" />
                         <text x="40" y="25" font-size="20" fill="#c5a059">✿</text>
+                        <text x="32" y="45" font-size="12" fill="var(--leaf-green)">🍃</text>
+                        <text x="50" y="70" font-size="12" fill="var(--leaf-green)">🍃</text>
                         <text x="30" y="100" font-size="16" fill="#c5a059">✿</text>
+                        <text x="50" y="140" font-size="12" fill="var(--leaf-green)">🍃</text>
+                        <text x="35" y="170" font-size="12" fill="var(--leaf-green)">🍃</text>
                         <text x="50" y="180" font-size="18" fill="#c5a059">✿</text>
+                        <text x="35" y="215" font-size="12" fill="var(--leaf-green)">🍃</text>
+                        <text x="55" y="240" font-size="12" fill="var(--leaf-green)">🍃</text>
                         <text x="25" y="250" font-size="20" fill="#c5a059">✿</text>
+                        <text x="45" y="290" font-size="12" fill="var(--leaf-green)">🍃</text>
+                        <text x="30" y="310" font-size="12" fill="var(--leaf-green)">🍃</text>
                         <text x="55" y="320" font-size="16" fill="#c5a059">✿</text>
+                        <text x="30" y="350" font-size="12" fill="var(--leaf-green)">🍃</text>
+                        <text x="50" y="380" font-size="12" fill="var(--leaf-green)">🍃</text>
                         <text x="35" y="400" font-size="18" fill="#c5a059">✿</text>
+                        <text x="45" y="430" font-size="12" fill="var(--leaf-green)">🍃</text>
                     </svg>
                     
                     <div class="event-row">
                         <div class="event-card left-event">
+                            <img src="https://drive.google.com/thumbnail?id=1mHnY71ZWjVIPOa3IlQZzn2IGKDngCEEW&sz=s1000" class="event-img reception-size" alt="Reception Icon">
                             <div class="event-content">
                                 <span class="event-time">6:00 PM</span>
                                 <span class="event-name">Reception</span>
                             </div>
-                            <img src="https://drive.google.com/thumbnail?id=1mHnY71ZWjVIPOa3IlQZzn2IGKDngCEEW&sz=s1000" class="event-img reception-size" alt="Reception Icon">
                         </div>
                         <div class="spacer"></div>
                     </div>
@@ -250,12 +255,12 @@
 
                     <div class="event-row">
                         <div class="event-card left-event">
+                            <img src="https://drive.google.com/thumbnail?id=1t1AM3MV3Fr0ylAFoNg4FyQY8LhsLy6sx&sz=s1000" class="event-img sumuhurtham-rounded" alt="Sumuhurtham Icon">
                             <div class="event-content">
                                 <span class="event-time">12:18 AM</span>
                                 <span class="event-name">Sumuhurtham</span>
                                 <small style="font-size:0.55rem; color:#999; letter-spacing: 0.5px;">FOLLOWING DAY</small>
                             </div>
-                            <img src="https://drive.google.com/thumbnail?id=1t1AM3MV3Fr0ylAFoNg4FyQY8LhsLy6sx&sz=s1000" class="event-img sumuhurtham-sharp-fade" alt="Sumuhurtham Icon">
                         </div>
                         <div class="spacer"></div>
                     </div>
@@ -266,7 +271,7 @@
                     PVK Prime Conventions, Viswaveswara Nagar, Auto Nagar, Gajuwaka, Vizag.
                 </div>
 
-                <div style="margin-top: 35px;">
+                <div style="margin-top: 25px;">
                     <span id="distance-tag">Calculating distance...</span>
                     <button id="navBtn" onclick="navigate()" class="btn">NAVIGATE ME</button><br>
                     <button onclick="saveToCalendar()" class="btn btn-alt">SAVE TO CALENDAR</button>

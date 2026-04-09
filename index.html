@@ -122,34 +122,32 @@
 
         #post-scratch-content { opacity: 0; display: none; transition: opacity 1.5s ease; }
 
-        /* --- TIMELINE UPDATES --- */
-        .timeline-container { position: relative; max-width: 500px; margin: 40px auto 0px; padding: 20px 0 0px; }
-        .creeper-svg { position: absolute; left: 50%; top: 0; bottom: 0; width: 80px; height: 88%; transform: translateX(-50%); z-index: 1; }
+        /* --- TIMELINE --- */
+        .timeline-container { position: relative; max-width: 500px; margin: 40px auto 0px; padding: 20px 0 10px; }
+        .creeper-svg { position: absolute; left: 50%; top: 0; bottom: 0; width: 60px; height: 95%; transform: translateX(-50%); z-index: 1; }
         
         .event-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 35px; position: relative; z-index: 2; }
         .event-card { 
-            width: 44%; padding: 5px; background: transparent; opacity: 0; 
-            transition: 0.9s cubic-bezier(0.17, 0.55, 0.55, 1); display: flex; align-items: center; gap: 12px;
+            width: 47%; padding: 5px; background: transparent; opacity: 0; 
+            transition: 0.9s cubic-bezier(0.17, 0.55, 0.55, 1); display: flex; align-items: center; gap: 10px;
         }
-        .left-event { transform: translateX(-30px); text-align: right; justify-content: flex-end; }
-        .right-event { transform: translateX(30px); text-align: left; justify-content: flex-start; }
+        .left-event { transform: translateX(-20px); text-align: right; justify-content: flex-end; }
+        .right-event { transform: translateX(20px); text-align: left; justify-content: flex-start; }
         .event-row.is-visible .event-card { opacity: 1; transform: translateX(0); }
         
-        /* Icon styling */
-        .event-img { width: 55px; height: 55px; object-fit: contain; flex-shrink: 0; display: block; image-rendering: high-quality; }
-        .reception-size { width: 62px; height: 62px; } /* Corrected reception size for mobile */
-        
-        /* requested 'embedded' look: sharp image, rounded, but softly blurred edges */
-        .sumuhurtham-blend { 
-            border-radius: 50%; /* Rounds the sharp borders */
-            filter: blur(0.3px); /* Softens edge transitions */
-            mix-blend-mode: multiply; /* Blends white/light backgrounds into the paper texture */
+        .event-img { width: 50px; height: 50px; object-fit: contain; flex-shrink: 0; display: block; image-rendering: -webkit-optimize-contrast; }
+        .reception-size { width: 58px; height: 58px; } 
+
+        .sumuhurtham-sharp-fade { 
+            border-radius: 8px;
+            -webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%);
+            mask-image: radial-gradient(circle, black 60%, transparent 100%);
         }
 
-        .event-content { display: flex; flex-direction: column; overflow: hidden; } /* Fixes display issues on left */
-        .event-name { font-family: 'Great Vibes', cursive; font-size: 1.8rem; color: var(--emerald); display: block; line-height: 1.2; }
-        .event-time { color: var(--gold); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 2px; }
-        .spacer { width: 44%; }
+        .event-content { display: flex; flex-direction: column; min-width: 0; } 
+        .event-name { font-family: 'Great Vibes', cursive; font-size: 1.6rem; color: var(--emerald); display: block; line-height: 1.1; white-space: nowrap; }
+        .event-time { color: var(--gold); font-weight: 700; font-size: 0.7rem; letter-spacing: 1px; margin-bottom: 2px; }
+        .spacer { width: 40%; }
 
         .btn {
             display: inline-block; margin: 8px 0; padding: 16px 30px; 
@@ -164,7 +162,7 @@
 
         #distance-tag { display: block; font-size: 0.65rem; color: var(--gold); margin-top: -5px; margin-bottom: 15px; font-weight: 600; letter-spacing: 1px; }
         #scratch-instr { font-size: 0.75rem; color: var(--gold); font-style: italic; margin-bottom: 10px; transition: opacity 0.5s;}
-        .details-text { font-size: 0.95rem; line-height: 2; color: var(--soft-text); margin-top: 0px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
+        .details-text { font-size: 0.95rem; line-height: 2; color: var(--soft-text); margin-top: 5px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
         .closing-message { margin: 60px auto 20px; font-style: italic; color: var(--soft-text); font-size: 1rem; max-width: 80%; }
         .thank-you { font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--gold); margin-top: 10px; font-weight: 300; }
     </style>
@@ -255,16 +253,16 @@
                             <div class="event-content">
                                 <span class="event-time">12:18 AM</span>
                                 <span class="event-name">Sumuhurtham</span>
-                                <small style="font-size:0.6rem; color:#999; letter-spacing: 1px;">FOLLOWING DAY</small>
+                                <small style="font-size:0.55rem; color:#999; letter-spacing: 0.5px;">FOLLOWING DAY</small>
                             </div>
-                            <img src="https://drive.google.com/thumbnail?id=1t1AM3MV3Fr0ylAFoNg4FyQY8LhsLy6sx&sz=s1000" class="event-img sumuhurtham-blend" alt="Sumuhurtham Icon">
+                            <img src="https://drive.google.com/thumbnail?id=1t1AM3MV3Fr0ylAFoNg4FyQY8LhsLy6sx&sz=s1000" class="event-img sumuhurtham-sharp-fade" alt="Sumuhurtham Icon">
                         </div>
                         <div class="spacer"></div>
                     </div>
                 </div>
 
                 <div class="details-text">
-                    <strong style="color: var(--emerald); letter-spacing: 3px; font-size: 1rem;">THE CELEBRATION AT</strong><br>
+                    <strong style="color: var(--emerald); letter-spacing: 3px; font-size: 0.9rem;">THE CELEBRATION AT</strong><br>
                     PVK Prime Conventions, Viswaveswara Nagar, Auto Nagar, Gajuwaka, Vizag.
                 </div>
 
